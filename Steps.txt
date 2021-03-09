@@ -1,0 +1,22 @@
+Steps to create the server with a Docker image
+
+1. First I built a docker image with modified nginx.conf file, index.html and version.html file
+
+2. Pushed that docker image to the docker hub
+
+3. Then I created a modular terraform script that creates these resources below
+-EC2 instance
+-AWS Key pair - You will have to generate for yourself using ssh-keygen
+-Security group
+-VPC
+-Internet gateway
+-Route table and association
+-Public subnet
+
+4. The user data in EC2 is a file (entry-script) that installs docker and launches a docker container at port 80
+
+5. Then using the server IP, I created an A record in route53 hosted zone for my website. www.harveensingh.com
+
+6. An application load balancer can be set up by creating a target group and adding that EC2 instance to the group. ALB listener will be 80, protocol will be HTTP.
+
+7. All the variables of this infrastructure can be controlled by changing values in terraform.tfvars file.
